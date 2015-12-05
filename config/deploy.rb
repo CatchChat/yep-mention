@@ -2,7 +2,7 @@
 lock '3.4.0'
 
 set :application, 'yep_mention'
-set :repo_url, 'git@example.com:me/my_repo.git'
+set :repo_url, 'git@github.com:CatchChat/yep-mention.git'
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
@@ -31,16 +31,30 @@ set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', '
 # Default value for keep_releases is 5
 # set :keep_releases, 5
 
+set :rbenv_ruby, '2.2.2'
+set :rbenv_custom_path, '/opt/rbenv'
+
+# Goliath
+set :goliath_worker_processes, 2
+set :goliath_start_port, 9000
+set :goliath_pidfile_path, 'tmp/pids'
+set :goliath_env, fetch(:stage)
+
 namespace :deploy do
 
-  after :restart, :clear_cache do
-    invoke 'goliath:restart'
-    on roles(:web), in: :groups, limit: 3, wait: 10 do
-      # Here we can do anything such as:
-      # within release_path do
-      #   execute :rake, 'cache:clear'
-      # end
-    end
+  task :start do
+    invoke 'goliath:start'
+    invoke 'bluepill:load'
   end
 
+  task :restart do
+    invoke 'goliath:restart'
+  end
+
+  task :stop do
+    invoke 'bluepill:quit'
+    invoke 'goliath:stop'
+  end
+
+  after 'deploy:published', 'goliath:restart', 'bluepill:load'
 end
