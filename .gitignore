@@ -1,0 +1,6 @@
+.env
+.ruby-version
+log
+tmp
+*.swp
+/.bundle
