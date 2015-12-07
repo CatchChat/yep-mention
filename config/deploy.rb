@@ -23,7 +23,7 @@ set :deploy_to, "/u/apps/#{fetch(:application)}"
 # set :pty, true
 
 # Default value for :linked_files is []
-set :linked_files, fetch(:linked_files, ['.env', 'config/newrelic.yml', '.ruby-version'])
+set :linked_files, fetch(:linked_files, ['.env', 'config/newrelic.yml', '.ruby-version', 'goliath.pill'])
 
 # Default value for linked_dirs is []
 set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets')
