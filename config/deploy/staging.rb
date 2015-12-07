@@ -7,6 +7,7 @@
 # server 'example.com', user: 'deploy', roles: %w{app web}, other_property: :other_value
 # server 'db.example.com', user: 'deploy', roles: %w{db}
 server 'staging-deploy', user: 'deploy', roles: %w{web app db}
+set :goliath_worker_processes, 2
 
 
 

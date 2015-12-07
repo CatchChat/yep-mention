@@ -6,7 +6,8 @@
 # server 'example.com', user: 'deploy', roles: %w{app db web}, my_property: :my_value
 # server 'example.com', user: 'deploy', roles: %w{app web}, other_property: :other_value
 # server 'db.example.com', user: 'deploy', roles: %w{db}
-server 'yep-deploy', user: 'deploy', roles: %w{web app db}
+server 'catchchat-deploy', user: 'deploy', roles: %w{web app db}
+set :goliath_worker_processes, 10
 
 
 
