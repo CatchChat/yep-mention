@@ -1,17 +1,17 @@
 Bluepill.application("goliath", log_file: "#{ENV['WORKING_DIR']}/log/bluepill.log") do |app|
-  <% ENV['WORKER_PROCESSES'].to_i.times do |i| %>
-  port = ENV['START_PORT'].to_i + i
-  app.process("goliath.<%= port %>") do |process|
-    process.working_dir = ENV['WORKING_DIR']
+  ENV['WORKER_PROCESSES'].to_i.times do |i|
+    port = ENV['START_PORT'].to_i + i
+    app.process("goliath.#{port}") do |process|
+      process.working_dir = ENV['WORKING_DIR']
 
-    process.start_grace_time    = 30.seconds
-    process.stop_grace_time     = 30.seconds
-    process.restart_grace_time  = 45.seconds
+      process.start_grace_time    = 30.seconds
+      process.stop_grace_time     = 30.seconds
+      process.restart_grace_time  = 45.seconds
 
-    process.start_command = "cd #{ENV['WORKING_DIR']}; bundle exec ruby yep_app.rb -e #{ENV['GOLIATH_ENV']} -p #{port} -d -l log/#{ENV['GOLIATH_ENV']}.log -P #{ENV['PIDFILE_PATH']}/#{port}.pid"
-    process.stop_command  = "cd #{ENV['WORKING_DIR']}; kill -TREM `cat #{ENV['PIDFILE_PATH']}/#{port}.pid`"
+      process.start_command = "/bin/su - deploy -c 'cd #{ENV['WORKING_DIR']} && (RBENV_ROOT=#{ENV['RBENV_ROOT']} RBENV_VERSION=#{ENV['RBENV_VERSION']} #{ENV['RBENV_ROOT']}/bin/rbenv exec ruby yep_app.rb -e #{ENV['GOLIATH_ENV']} -p #{port} -d -l log/#{ENV['GOLIATH_ENV']}.log -P #{ENV['PIDFILE_PATH']}/#{port}.pid)'"
+      process.stop_command  = "/bin/su - deploy -c 'kill -TERM `cat #{ENV['WORKING_DIR']}/#{ENV['PIDFILE_PATH']}/#{port}.pid`'"
 
-    process.pid_file = "#{ENV['WORKING_DIR']}/#{ENV['PIDFILE_PATH']}/#{port}.pid"
+      process.pid_file = "#{ENV['WORKING_DIR']}/#{ENV['PIDFILE_PATH']}/#{port}.pid"
+    end
   end
-  <% end %>
 end

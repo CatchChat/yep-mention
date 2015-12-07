@@ -10,7 +10,7 @@ namespace :bluepill do
     goliath_env      = fetch(:goliath_env) || fetch(:stage)
     on roles(:app) do
       within current_path do
-        execute :sudo, "bluepill load goliath.pill WORKING_DIR=#{current_path} WORKER_PROCESSES=#{worker_processes} START_PORT=#{start_port} GOLIATH_ENV=#{goliath_env} PIDFILE_PATH=#{pidfile_path}"
+        execute :sudo, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} WORKING_DIR=#{current_path} WORKER_PROCESSES=#{worker_processes} START_PORT=#{start_port} GOLIATH_ENV=#{goliath_env} PIDFILE_PATH=#{pidfile_path} bluepill load goliath.pill"
       end
     end
   end
