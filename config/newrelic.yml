@@ -14,7 +14,7 @@ common: &default_settings
 
   # Your application name. Renaming here affects where data displays in New
   # Relic.  For more details, see https://docs.newrelic.com/docs/apm/new-relic-apm/maintenance/renaming-applications
-  app_name: Yep Mention
+  app_name: yep_mention
 
   # To disable the agent regardless of other settings, uncomment the following:
   # agent_enabled: false
@@ -28,7 +28,7 @@ common: &default_settings
 # If your application has other named environments, configure them here.
 development:
   <<: *default_settings
-  app_name: Yep Mention (Development)
+  app_name: yep_mention (Development)
 
   # NOTE: There is substantial overhead when running in developer mode.
   # Do not use for production or load testing.
@@ -41,7 +41,7 @@ test:
 
 staging:
   <<: *default_settings
-  app_name: Yep Mention (Staging)
+  app_name: yep_mention (Staging)
 
 production:
   <<: *default_settings
