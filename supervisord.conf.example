@@ -1,0 +1,6 @@
+[supervisord]
+nodaemon=true
+[program:mention.3000]
+command=ruby yep_app.rb -e development -p 3000 -d -l log/development.log -P tmp/pids/3000.pid
+[program:mention.3001]
+command=ruby yep_app.rb -e development -p 3001 -d -l log/development.log -P tmp/pids/3001.pid

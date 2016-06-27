@@ -6,3 +6,4 @@ tmp
 /.bundle
 *.staging
 *.production
+supervisord.conf
