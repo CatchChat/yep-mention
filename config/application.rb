@@ -4,8 +4,10 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 
 require 'boot'
-require 'dotenv'
-Dotenv.load
+if File.exist?('.env')
+  require 'dotenv'
+  Dotenv.load
+end
 
 ENV['RACK_ENV'] ||= 'development'
 Bundler.require :default, ENV['RACK_ENV']
